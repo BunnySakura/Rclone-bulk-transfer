@@ -27,5 +27,10 @@ python3 Rclone批量传输.py <待传输文件所在目录> <目标目录> <待�
 
 ------------
 
+## 补充
+- Rclone无法使用proxychains4。因为其由golang编写，而golang实现了自己的网络库，所以基于Linux网络库的代理无法使用。
+  详见：[proxychains4 with Go lang](https://github.com/rofl0r/proxychains-ng/issues/199 "proxychains4 with Go lang")。
+- 可以使用环境变量设置代理，详见：[Can I use rclone with an HTTP proxy?](https://rclone.org/faq/#can-i-use-rclone-with-an-http-proxy "Can I use rclone with an HTTP proxy?")
+
 ## 引用
 [Python之系统交互（subprocess）](https://www.cnblogs.com/yyds/p/7288916.html "Python之系统交互（subprocess）")
