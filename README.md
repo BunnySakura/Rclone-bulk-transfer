@@ -1,31 +1,39 @@
-# Rclone批量传输
+# Rclone批量操作
 
-*鉴于似乎并未发现Rclone提供该功能，故实现此脚本。
-用于**有选择性**地将某一路径下的子文件或文件夹批量复制（copy）到指定路径，并检查（check）确认*
+*鉴于似乎并未发现Rclone提供该功能，故实现此脚本。基于Rclone实现文件的**批量**操作：同步、复制、移动、删除等等。*
 
 ------------
 
 ## 使用方法
+- **安装fire库**：
+  ```bash
+  pip install fire
+  ```
 
-```
-python3 Rclone批量传输.py <待传输文件所在目录> <目标目录> <待传输文件列表的文本文件> <传输参数>
-```
+- **获取帮助**：
+  ```bash
+  python quickRclone.py --help
+  ```
+  使用`--help`参数即可获取各类指令的帮助信息。
+
 - **举例**：
-  ```python
-  python3 Rclone批量传输.py OneDrive:/目录 GoogleDrive:/目录 files.txt --ignore-errors --cache-chunk-size 20M --drive-server-side-across-configs
-  ```
-
-- **待传输文件列表的文本文件如何获得**
   ```bash
-  ls <目录> > files.txt
+  python quickRclone.py sync OneDrive:/目录 GoogleDrive:/目录 files.txt '"--ignore-errors --cache-chunk-size 20M --drive-server-side-across-configs "'
   ```
-  
-  ```bash
-  rclone lsd <远程目录> | cut -b 44-99 > files.txt
-  ```  
-  在输出的文件中仅保留待传输文件夹或文件即可
+  单引号包裹的字符串为Rclone接收的参数，使用单引号避免被错误解析。一般无需设置此项参数，默认值即可。
 
-------------
+- **如何获得待操作文件列表**：
+  - 获取本地路径文件列表：
+    ```bash
+    python quickRclone.py ll <本地路径> files.txt
+    ```
+
+  - 获取远程路径文件列表：
+    ```bash
+    python quickRclone.py lr <远程路径> files.txt
+    ```
+
+  在输出的文件中仅保留待操作文件即可。
 
 ## 补充
 - Rclone无法使用proxychains4。因为其由golang编写，而golang实现了自己的网络库，所以基于Linux网络库的代理无法使用。
@@ -33,4 +41,5 @@ python3 Rclone批量传输.py <待传输文件所在目录> <目标目录> <待�
 - 可以使用环境变量设置代理，详见：[Can I use rclone with an HTTP proxy?](https://rclone.org/faq/#can-i-use-rclone-with-an-http-proxy "Can I use rclone with an HTTP proxy?")
 
 ## 引用
-[Python之系统交互（subprocess）](https://www.cnblogs.com/yyds/p/7288916.html "Python之系统交互（subprocess）")
+- [Python之系统交互（subprocess）](https://www.cnblogs.com/yyds/p/7288916.html "Python之系统交互（subprocess）")
+- [Python 命令行之旅](https://github.com/HelloGitHub-Team/Article/blob/master/contents/Python/cmdline/catalog.md "Python 命令行之旅")
